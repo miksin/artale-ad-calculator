@@ -1,9 +1,11 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import { calculateDamage, getWeaponEffect } from "../models/Damage";
   import { Weapon, weaponMap, weapons } from "../models/Item";
   import { characterStatuses, Status, statusMap } from "../models/Status";
+  import { SimpleCalculatorSaver } from "../models/Saver";
 
-  let currentWeapon = $state(Weapon.OneHandedSword);
+  let currentWeapon = $state<Weapon>(Weapon.OneHandedSword);
   let currentStatus = $state({
     [Status.STR]: 4,
     [Status.DEX]: 4,
@@ -11,6 +13,21 @@
     [Status.LUK]: 4,
     [Status.ATK]: 0,
     [Status.Mastery]: 60,
+  });
+
+  onMount(() => {
+    const saveData = SimpleCalculatorSaver.load();
+    if (saveData) {
+      currentWeapon = saveData.weapon as Weapon;
+      currentStatus = saveData.status;
+    }
+  });
+
+  $effect(() => {
+    SimpleCalculatorSaver.save({
+      weapon: currentWeapon,
+      status: currentStatus,
+    });
   });
 
   let currentCharacterStatuses = $derived.by(() => {
