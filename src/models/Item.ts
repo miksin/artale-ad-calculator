@@ -22,7 +22,7 @@ export const weaponMap: Record<Weapon, string> = {
   [Weapon.TwoHandedAxe]: "雙手斧/棍",
   [Weapon.Spear]: "槍",
   [Weapon.Polearm]: "矛",
-  [Weapon.Dagger]: "短刀",
+  [Weapon.Dagger]: "短劍",
   [Weapon.ThrowingStar]: "鏢",
   [Weapon.Bow]: "弓",
   [Weapon.Crossbow]: "弩",
